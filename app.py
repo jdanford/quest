@@ -1,15 +1,13 @@
-from datetime import datetime
-
-from flask import Flask, render_template
-
-
-app = Flask(__name__)
+from quest import db
+from quest.factory import create_app, register_blueprints
 
 
-@app.route("/", methods=["GET"])
-def index():
-    return render_template("index.html", now=datetime.now())
+app = create_app()
+register_blueprints(app)
+
+db.init_app(app)
+db.create_all(app=app)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

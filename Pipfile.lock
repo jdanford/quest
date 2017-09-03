@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9ec5b406d3ba2740fbbc2d003d81a1bfeebfe88dd65eabb5d343a611d364e01c"
+            "sha256": "bec1fc5fa7924fcd71d71a6711db2cfd28b1281dd67783aa73c39dfe565f5d4e"
         },
         "requires": {},
         "sources": [
@@ -32,6 +32,18 @@
         },
         "markupsafe": {
             "version": "==1.0"
+        },
+        "psycopg2": {
+            "version": "==2.7.3.1"
+        },
+        "py": {
+            "version": "==1.4.34"
+        },
+        "pytest": {
+            "version": "==3.2.1"
+        },
+        "setuptools": {
+            "version": "==36.3.0"
         },
         "sqlalchemy": {
             "version": "==1.1.13"

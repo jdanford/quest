@@ -5,3 +5,5 @@ verify_ssl = true
 [packages]
 Flask-SQLAlchemy = "*"
 gunicorn = "*"
+psycopg2 = "*"
+pytest = "*"
