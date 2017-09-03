@@ -23,3 +23,15 @@ def create_feature():
     db.session.commit()
 
     return jsonify({"id": feature.id}), 201
+
+
+@blueprint.route("/features/<int:feature_id>", methods=["DELETE"])
+def delete_feature(feature_id):
+    feature = Feature.query.filter(Feature.id == feature_id).one_or_none()
+    if not feature:
+        abort(404)
+
+    db.session.delete(feature)
+    db.session.commit()
+
+    return "", 200

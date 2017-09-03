@@ -59,7 +59,7 @@ def test_empty_db(client):
 
 def test_add_feature(client):
     feature_data = {
-        "name": "Good feature",
+        "title": "Good feature",
         "description": "It's really good",
         "client": "A",
         "priority": 1,
@@ -72,6 +72,26 @@ def test_add_feature(client):
 
     feature_data["id"] = response_data["id"]
     assert get(client, "/api/features") == {"features": [feature_data]}
+
+
+def test_delete_feature(client):
+    feature_data = {
+        "title": "Awesome feature",
+        "description": "You won't believe it!",
+        "client": "B",
+        "priority": 1,
+        "target_date": "2017-12-12",
+        "product_area": "claims"
+    }
+
+    response_data = post(client, "/api/features", feature_data)
+    assert set(response_data.keys()) == {"id"}
+
+    feature_id = response_data["id"]
+    delete_response = client.delete("/api/features/{}".format(feature_id))
+    assert delete_response.status_code == 200
+
+    assert get(client, "/api/features") == {"features": []}
 
 
 def get(client, url):

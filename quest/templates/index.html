@@ -50,7 +50,8 @@
               </select>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-success" data-bind="click: savePendingFeatureRequest, enable: isValid()">Create feature request</button>
+              <button type="submit" class="btn btn-success pull-right" data-bind="click: savePendingFeatureRequest, enable: isValid()">Create feature request</button>
+              <div class="clearfix"></div>
             </div>
           </form>
         </div>
@@ -59,19 +60,31 @@
             <div class="panel-heading">
               <h3 class="panel-title">
                 <span data-bind="text: title"></span>
-                <a href="#">
-                  <span class="label label-default" data-bind="text: product_area"></span>
-                </a>
               </h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" data-bind="click: $root.deleteFeatureRequest">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="panel-body">
               <p class="description" data-bind="text: description"></p>
-              <button class="btn btn-primary" type="button">
-                <span class="client" data-bind="text: client"></span>
-                <span class="badge priority" data-bind="text: priority"></span>
-              </button>
-              <span class="target-date" data-bind="text: target_date"></span>
+              <dl>
+                <dt>Product Area</dt>
+                <dd>
+                  <span class="product-area" data-bind="text: product_area"></span>
+                </dd>
+                <dt>Client</dt>
+                <dd>
+                  <span class="client" data-bind="text: client"></span>
+                </dd>
+                <dt>Priority</dt>
+                <dd>
+                  <span class="priority" data-bind="text: priority"></span>
+                </dd>
+                <dt>Target Date</dt>
+                <dd>
+                  <span class="target-date" data-bind="text: target_date"></span>
+                </dd>
+              </dl>
             </div>
           </div>
         </div>

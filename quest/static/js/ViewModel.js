@@ -67,11 +67,25 @@ function ViewModel() {
             self.loadFeatureRequests();
         });
     };
+
+    self.deleteFeatureRequest = function (featureRequest) {
+        var message = "Are you sure you want to delete \"" + featureRequest.title + "\"?";
+        if (!confirm(message)) {
+            return;
+        }
+
+        ajax({
+            method: "DELETE",
+            url: "/api/features/" + featureRequest.id,
+        }, function (data) {
+            self.loadFeatureRequests();
+        });
+    };
 }
 
 function ajax(params, callback) {
     params.contentType = "application/json";
-    params.dataType = "json";
+    params.dataType = params.method !== "DELETE" && "json";
     params.success = callback;
     params.error = function (xhr, status, message) {
         displayErrorMessage(message);
