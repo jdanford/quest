@@ -36,15 +36,15 @@ def db(request, app):
 def session(request, db):
     connection = db.engine.connect()
     transaction = connection.begin()
-    session = db.create_scoped_session(
+    _session = db.create_scoped_session(
         options={"bind": connection, "binds": {}})
 
-    db.session = session
-    yield session
+    db.session = _session
+    yield _session
 
     transaction.rollback()
     connection.close()
-    session.remove()
+    _session.remove()
 
 
 @pytest.fixture
@@ -54,6 +54,35 @@ def client(request, app, session):
 
 
 def test_empty_db(client):
-    response = client.get("/api/features")
-    data = json.loads(response.get_data())
-    assert data == {"features": []}
+    assert get(client, "/api/features") == {"features": []}
+
+
+def test_add_feature(client):
+    feature_data = {
+        "name": "Good feature",
+        "description": "It's really good",
+        "client": "A",
+        "priority": 1,
+        "target_date": "2017-11-11",
+        "product_area": "billing"
+    }
+
+    response_data = post(client, "/api/features", feature_data)
+    assert set(response_data.keys()) == {"id"}
+
+    feature_data["id"] = response_data["id"]
+    assert get(client, "/api/features") == {"features": [feature_data]}
+
+
+def get(client, url):
+    response = client.get(url)
+    return get_response_json(response)
+
+
+def post(client, url, data):
+    response = client.post(url, data=json.dumps(data), content_type="application/json")
+    return get_response_json(response)
+
+
+def get_response_json(response):
+    return json.loads(response.get_data())
