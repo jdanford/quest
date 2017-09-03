@@ -6,4 +6,7 @@ verify_ssl = true
 Flask-SQLAlchemy = "*"
 gunicorn = "*"
 psycopg2 = "*"
+
+[dev-packages]
 pytest = "*"
+flake8 = "*"

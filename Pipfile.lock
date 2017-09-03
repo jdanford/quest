@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bec1fc5fa7924fcd71d71a6711db2cfd28b1281dd67783aa73c39dfe565f5d4e"
+            "sha256": "fbbf62d8ffbbed372e34124424eede8211042ecb614c700022ae004eb72a5e8d"
         },
         "requires": {},
         "sources": [
@@ -36,15 +36,6 @@
         "psycopg2": {
             "version": "==2.7.3.1"
         },
-        "py": {
-            "version": "==1.4.34"
-        },
-        "pytest": {
-            "version": "==3.2.1"
-        },
-        "setuptools": {
-            "version": "==36.3.0"
-        },
         "sqlalchemy": {
             "version": "==1.1.13"
         },
@@ -52,5 +43,27 @@
             "version": "==0.12.2"
         }
     },
-    "develop": {}
+    "develop": {
+        "flake8": {
+            "version": "==3.4.1"
+        },
+        "mccabe": {
+            "version": "==0.6.1"
+        },
+        "py": {
+            "version": "==1.4.34"
+        },
+        "pycodestyle": {
+            "version": "==2.3.1"
+        },
+        "pyflakes": {
+            "version": "==1.5.0"
+        },
+        "pytest": {
+            "version": "==3.2.1"
+        },
+        "setuptools": {
+            "version": "==36.3.0"
+        }
+    }
 }
