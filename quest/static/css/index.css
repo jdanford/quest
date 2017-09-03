@@ -27,3 +27,9 @@ body > .container {
 .footer p {
     margin: 20px 0;
 }
+
+/*------------------------------*/
+
+.feature-request .panel-title {
+    display: inline-block;
+}

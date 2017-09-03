@@ -18,9 +18,12 @@ class ProductArea(enum.Enum):
     REPORTS = "reports"
 
 
+DATE_FORMAT = "%Y-%m-%d"
+
+
 class Feature(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256))
+    title = db.Column(db.String(256))
     description = db.Column(db.Text)
     client = db.Column(db.Enum(Client))
     priority = db.Column(db.Integer)
@@ -31,19 +34,19 @@ class Feature(db.Model):
     def from_json(cls, data):
         client = Client[data["client"].upper()]
         priority = int(data["priority"])
-        target_date = datetime.strptime(data["target_date"], "%Y-%m-%d")
+        target_date = datetime.strptime(data["target_date"], DATE_FORMAT)
         product_area = ProductArea[data["product_area"].upper()]
-        return cls(id=data.get("id"), name=data["name"], description=data["description"], client=client, priority=priority,
-                   target_date=target_date, product_area=product_area)
+        return cls(id=data.get("id"), title=data["title"], description=data["description"], client=client,
+                   priority=priority, target_date=target_date, product_area=product_area)
 
     def to_json(self):
         return {
             "id": self.id,
-            "name": self.name,
+            "title": self.title,
             "description": self.description,
             "client": self.client.value,
             "priority": self.priority,
-            "target_date": self.target_date.strftime("%Y-%m-%d"),
+            "target_date": self.target_date.strftime(DATE_FORMAT),
             "product_area": self.product_area.value
         }
 

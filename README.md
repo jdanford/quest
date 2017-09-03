@@ -2,6 +2,10 @@
 
 A web application for creating feature requests.
 
+## Linting
+
+    pipenv run flake8 app.py quest
+
 ## Testing
 
     pipenv run python -m pytest

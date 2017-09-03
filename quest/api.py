@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import Blueprint, abort, jsonify, request
 
 from . import db

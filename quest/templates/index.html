@@ -15,47 +15,65 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3" id="section-editor">
-          <form>
+          <form id="pending-feature-request">
             <div class="form-group">
               <label for="input-title">Title</label>
-              <input type="text" class="form-control" id="input-title" placeholder="A short, descriptive name">
+              <input type="text" class="form-control" id="input-title" placeholder="A short, descriptive name" data-bind="textInput: title">
             </div>
             <div class="form-group">
               <label for="input-description">Description</label>
-              <textarea class="form-control" id="input-description" placeholder="A long description of the feature request" rows="3"></textarea>
+              <textarea class="form-control" id="input-description" placeholder="A long description of the feature request" rows="3" data-bind="textInput: description"></textarea>
             </div>
             <div class="form-group">
               <label for="input-client">Client</label>
-              <select class="form-control" id="input-client">
-                <option>Client A</option>
-                <option>Client B</option>
-                <option>Client C</option>
+              <select class="form-control" id="input-client" data-bind="value: client">
+                <option value="A">Client A</option>
+                <option value="B">Client B</option>
+                <option value="C">Client C</option>
               </select>
             </div>
             <div class="form-group">
               <label for="input-priority">Client Priority</label>
-              <input type="number" class="form-control" id="input-priority" value="1" min="1">
+              <input type="number" class="form-control" id="input-priority" min="1" data-bind="value: priority">
             </div>
             <div class="form-group">
               <label for="input-date">Target Date</label>
-              <input type="date" class="form-control" id="input-date" value="{{ now.strftime('%Y-%m-%d') }}">
+              <input type="date" class="form-control" id="input-date" min="{{ now.strftime('%Y-%m-%d') }}" data-bind="value: target_date">
             </div>
             <div class="form-group">
               <label for="input-product">Product Area</label>
-              <select class="form-control" id="input-product">
-                <option>Policies</option>
-                <option>Billing</option>
-                <option>Claims</option>
-                <option>Reports</option>
+              <select class="form-control" id="input-product" data-bind="value: product_area">
+                <option value="policies">Policies</option>
+                <option value="billing">Billing</option>
+                <option value="claims">Claims</option>
+                <option value="reports">Reports</option>
               </select>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-success">Create feature request</button>
+              <button type="submit" class="btn btn-success" data-bind="click: savePendingFeatureRequest, enable: isValid()">Create feature request</button>
             </div>
           </form>
         </div>
-        <div class="col-xs-12 col-md-6 col-md-offset-3" id="section-list">
-
+        <div class="col-xs-12 col-md-6 col-md-offset-3" id="section-list" data-bind="foreach: featureRequests">
+          <div class="panel panel-default feature-request">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span data-bind="text: title"></span>
+                <a href="#">
+                  <span class="label label-default" data-bind="text: product_area"></span>
+                </a>
+              </h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="panel-body">
+              <p class="description" data-bind="text: description"></p>
+              <button class="btn btn-primary" type="button">
+                <span class="client" data-bind="text: client"></span>
+                <span class="badge priority" data-bind="text: priority"></span>
+              </button>
+              <span class="target-date" data-bind="text: target_date"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -66,5 +84,8 @@
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="{{ url_for('static', filename='js/ViewModel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
   </body>
 </html>
