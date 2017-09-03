@@ -20,12 +20,7 @@ def create_feature():
     if not request.json:
         abort(400)
 
-    params = request.json
-    priority = int(params.priority)
-    target_date = datetime.strptime(params.target_date, "%Y-%m-%d")
-    feature = Feature(name=params.name, description=params.description, client=params.client,
-                      priority=priority, target_date=target_date, product_area=params.product_area)
-
+    feature = Feature.from_json(request.json)
     db.session.add(feature)
     db.session.commit()
 

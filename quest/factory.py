@@ -1,5 +1,7 @@
 from flask import Flask
 
+from .models import ModelEncoder
+
 
 DEFAULT_DATABASE_URI = "postgresql://localhost/quest"
 
@@ -8,6 +10,7 @@ def create_app(config=None):
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = DEFAULT_DATABASE_URI
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.json_encoder = ModelEncoder
 
     if config:
         app.config.update(config)
