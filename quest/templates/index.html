@@ -14,7 +14,8 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3" id="section-editor">
+        <div class="col-xs-12 col-sm-6" id="editor-section">
+          <h2>Pending feature request</h2>
           <form id="pending-feature-request">
             <div class="form-group">
               <label for="input-title">Title</label>
@@ -24,30 +25,32 @@
               <label for="input-description">Description</label>
               <textarea class="form-control" id="input-description" placeholder="A long description of the feature request" rows="3" data-bind="textInput: description"></textarea>
             </div>
-            <div class="form-group">
-              <label for="input-client">Client</label>
-              <select class="form-control" id="input-client" data-bind="value: client">
-                <option value="A">Client A</option>
-                <option value="B">Client B</option>
-                <option value="C">Client C</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="input-priority">Client Priority</label>
-              <input type="number" class="form-control" id="input-priority" min="1" data-bind="value: priority">
-            </div>
-            <div class="form-group">
-              <label for="input-date">Target Date</label>
-              <input type="date" class="form-control" id="input-date" min="{{ now.strftime('%Y-%m-%d') }}" data-bind="value: target_date">
-            </div>
-            <div class="form-group">
-              <label for="input-product">Product Area</label>
-              <select class="form-control" id="input-product" data-bind="value: product_area">
-                <option value="policies">Policies</option>
-                <option value="billing">Billing</option>
-                <option value="claims">Claims</option>
-                <option value="reports">Reports</option>
-              </select>
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="input-client">Client</label>
+                <select class="form-control" id="input-client" data-bind="value: client">
+                  <option value="A">Client A</option>
+                  <option value="B">Client B</option>
+                  <option value="C">Client C</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="input-priority">Client Priority</label>
+                <input type="number" class="form-control" id="input-priority" min="1" data-bind="value: priority">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="input-date">Target Date</label>
+                <input type="date" class="form-control" id="input-date" min="{{ now.strftime('%Y-%m-%d') }}" data-bind="value: target_date">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="input-product">Product Area</label>
+                <select class="form-control" id="input-product" data-bind="value: product_area">
+                  <option value="policies">Policies</option>
+                  <option value="billing">Billing</option>
+                  <option value="claims">Claims</option>
+                  <option value="reports">Reports</option>
+                </select>
+              </div>
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-success pull-right" data-bind="click: savePendingFeatureRequest, enable: isValid()">Create feature request</button>
@@ -55,36 +58,41 @@
             </div>
           </form>
         </div>
-        <div class="col-xs-12 col-md-6 col-md-offset-3" id="section-list" data-bind="foreach: featureRequests">
-          <div class="panel panel-default feature-request">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <span data-bind="text: title"></span>
-              </h3>
-              <button type="button" class="close" data-bind="click: $root.deleteFeatureRequest">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="panel-body">
-              <p class="description" data-bind="text: description"></p>
-              <dl>
-                <dt>Product Area</dt>
-                <dd>
-                  <span class="product-area" data-bind="text: product_area"></span>
-                </dd>
-                <dt>Client</dt>
-                <dd>
-                  <span class="client" data-bind="text: client"></span>
-                </dd>
-                <dt>Priority</dt>
-                <dd>
-                  <span class="priority" data-bind="text: priority"></span>
-                </dd>
-                <dt>Target Date</dt>
-                <dd>
-                  <span class="target-date" data-bind="text: target_date"></span>
-                </dd>
-              </dl>
+        <hr class="hide visible-xs">
+        <div class="col-xs-12 col-sm-6" id="feature-request-section">
+          <h2>Active feature requests</h2>
+          <div id="feature-request-list" data-bind="foreach: featureRequests">
+            <div class="panel feature-request" data-bind="css: $root.featureRequestClass($data)">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <span data-bind="text: title"></span>
+                </h3>
+                <button type="button" class="close" data-bind="click: $root.deleteFeatureRequest">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="panel-body">
+                <p class="description" data-bind="text: description"></p>
+                <hr>
+                <dl>
+                  <dt>Product Area</dt>
+                  <dd>
+                    <span class="product-area" data-bind="text: $root.productAreaName(product_area)"></span>
+                  </dd>
+                  <dt>Client</dt>
+                  <dd>
+                    <span class="client" data-bind="text: client"></span>
+                  </dd>
+                  <dt>Priority</dt>
+                  <dd>
+                    <span class="priority" data-bind="text: priority"></span>
+                  </dd>
+                  <dt>Target Date</dt>
+                  <dd>
+                    <span class="target-date" data-bind="text: target_date"></span>
+                  </dd>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
@@ -98,6 +106,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ViewModel.js') }}"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
   </body>

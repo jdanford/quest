@@ -5,6 +5,9 @@ import json
 from . import db
 
 
+DATE_FORMAT = "%Y-%m-%d"
+
+
 class Client(enum.Enum):
     A = "A"
     B = "B"
@@ -18,9 +21,6 @@ class ProductArea(enum.Enum):
     REPORTS = "reports"
 
 
-DATE_FORMAT = "%Y-%m-%d"
-
-
 class Feature(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
@@ -32,14 +32,18 @@ class Feature(db.Model):
 
     @classmethod
     def update_priorities(cls, client, new_feature=None):
-        features = Feature.query.filter_by(client=client).all()
+        query = Feature.query.filter_by(client=client)
+        features = query.all()
 
         if new_feature:
-            if Feature.query.filter_by(priority=new_feature.priority).scalar():
+            # check if there is an existing feature request with the same priority
+            if query.filter_by(priority=new_feature.priority).scalar():
+                # if so, give the new one a lower priority value
                 new_feature.priority -= 0.5
 
             features.append(new_feature)
 
+        # renumber priorities from 1 to fix any gaps or fractional values
         sorted_features = sorted(features, key=lambda feature: feature.priority)
         for i, feature in enumerate(sorted_features, start=1):
             feature.priority = i

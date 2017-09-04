@@ -30,6 +30,10 @@ body > .container {
 
 /*------------------------------*/
 
+.row hr {
+    width: 100%;
+}
+
 .feature-request .panel-title {
     display: inline-block;
 }

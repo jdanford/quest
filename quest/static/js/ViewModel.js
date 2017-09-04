@@ -1,8 +1,15 @@
+// steal the current date from the template
 var currentDate = $("#input-date").attr("min");
 
 function ViewModel() {
+    // mmm love that dynamic binding workaround
     var self = this;
 
+    // app data
+    self.featureRequests = ko.observableArray();
+    self.loading = ko.observable(false);
+
+    // editor fields
     self.id = undefined;
     self.title = ko.observable();
     self.description = ko.observable();
@@ -21,6 +28,7 @@ function ViewModel() {
         self.product_area("billing");
     };
 
+    // keepin' it DRY
     self.resetFields();
 
     self.isNew = ko.computed(function () {
@@ -36,9 +44,6 @@ function ViewModel() {
             && productAreaIsValid(self.product_area());
     });
 
-    self.featureRequests = ko.observableArray();
-    self.loading = ko.observable(false);
-
     self.loadFeatureRequests = function () {
         self.loading(true);
         ajax({
@@ -51,6 +56,7 @@ function ViewModel() {
     };
 
     self.savePendingFeatureRequest = function () {
+        // this could be shorter if `ko.toJSON()` accepted a list of keys
         var data = JSON.stringify({
             title: self.title(),
             description: self.description(),
@@ -83,47 +89,27 @@ function ViewModel() {
             self.loadFeatureRequests();
         });
     };
-}
 
-function ajax(params, callback) {
-    params.contentType = "application/json";
-    params.dataType = params.method !== "DELETE" && "json";
-    params.success = callback;
-    params.error = function (xhr, status, message) {
-        displayErrorMessage(message);
+    self.productAreaName = function (productArea) {
+        return PRODUCT_AREA_NAMES[productArea];
     };
 
-    return $.ajax(params);
+    self.featureRequestClass = function (featureRequest) {
+        return PRODUCT_AREA_CLASSES[featureRequest.product_area];
+    };
 }
 
-function displayErrorMessage(message) {
-    var text = "Error: " + message;
-    alert(text);
-}
-
-var DATE_REGEX = /\d{4}-\d{2}-\d{2}/;
-
-function dateIsValid(date) {
-    return DATE_REGEX.test(date);
-}
-
-function clientIsValid(client) {
-    return !!VALID_CLIENTS[client];
-}
-
-var VALID_CLIENTS = {
-    A: true,
-    B: true,
-    C: true,
+var PRODUCT_AREA_NAMES = {
+    policies: "Policies",
+    billing: "Billing",
+    claims: "Claims",
+    reports: "Reports",
 };
 
-function productAreaIsValid(productArea) {
-    return !!VALID_PRODUCT_AREAS[productArea];
-}
-
-var VALID_PRODUCT_AREAS = {
-    policies: true,
-    billing: true,
-    claims: true,
-    reports: true,
+var PRODUCT_AREA_CLASSES = {
+    policies: "panel-success",
+    billing: "panel-info",
+    claims: "panel-warning",
+    // everyone knows reports are the most dangerous
+    reports: "panel-danger",
 };
