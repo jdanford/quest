@@ -2,6 +2,7 @@
   "name": "Quest",
   "description": "A web application for creating feature requests",
   "repository": "https://github.com/jdanford/quest",
+  "logo": "https://github.com/jdanford/quest/raw/master/quest/static/images/compass.svg?sanitize=true",
   "addons": [
     "heroku-postgresql"
   ]

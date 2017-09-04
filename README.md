@@ -34,3 +34,7 @@ pipenv run flake8 app.py quest
 ## Deployment
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Attributions
+
+- Compass icon from [Open Iconic](www.useiconic.com/open)
