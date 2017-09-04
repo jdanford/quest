@@ -53,6 +53,10 @@ function ViewModel() {
         self.activeClient(client);
     };
 
+    self.activeClientName = ko.computed(function () {
+        return ACTIVE_CLIENT_NAMES[self.activeClient()];
+    });
+
     self.filteredFeatureRequests = ko.computed(function () {
         var client = self.activeClient();
         return self.featureRequests().filter(function (featureRequest) {
@@ -129,6 +133,13 @@ var FIELD_DEFAULTS = {
     product_area: "policies",
     client: "A",
 };
+
+var ACTIVE_CLIENT_NAMES = {
+    "": "all clients",
+    A: "Client A",
+    B: "Client B",
+    C: "Client C",
+}
 
 var PRODUCT_AREA_NAMES = {
     policies: "Policies",

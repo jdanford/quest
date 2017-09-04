@@ -43,49 +43,52 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6" id="editor-section">
           <h2>Pending feature request</h2>
-          <form id="pending-feature-request">
-            <div class="form-group">
-              <label for="input-title">Title</label>
-              <input type="text" class="form-control" id="input-title" placeholder="A short, descriptive name" data-bind="textInput: title">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <form id="pending-feature-request">
+                <div class="form-group">
+                  <label for="input-title">Title</label>
+                  <input type="text" class="form-control" id="input-title" placeholder="A short, descriptive name" data-bind="textInput: title">
+                </div>
+                <div class="form-group">
+                  <label for="input-description">Description</label>
+                  <textarea class="form-control" id="input-description" placeholder="A long description of the feature request" rows="3" data-bind="textInput: description"></textarea>
+                </div>
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label for="input-client">Client</label>
+                    <select class="form-control" id="input-client" data-bind="value: client">
+                      <option value="A">Client A</option>
+                      <option value="B">Client B</option>
+                      <option value="C">Client C</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="input-priority">Client Priority</label>
+                    <input type="number" class="form-control" id="input-priority" min="1" data-bind="value: priority">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="input-date">Target Date</label>
+                    <input type="date" class="form-control" id="input-date" min="{{ now.strftime('%Y-%m-%d') }}" data-bind="value: target_date">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="input-product">Product Area</label>
+                    <select class="form-control" id="input-product" data-bind="value: product_area">
+                      <option value="policies">Policies</option>
+                      <option value="billing">Billing</option>
+                      <option value="claims">Claims</option>
+                      <option value="reports">Reports</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div class="form-group">
-              <label for="input-description">Description</label>
-              <textarea class="form-control" id="input-description" placeholder="A long description of the feature request" rows="3" data-bind="textInput: description"></textarea>
-            </div>
-            <div class="row">
-              <div class="form-group col-sm-6">
-                <label for="input-client">Client</label>
-                <select class="form-control" id="input-client" data-bind="value: client">
-                  <option value="A">Client A</option>
-                  <option value="B">Client B</option>
-                  <option value="C">Client C</option>
-                </select>
-              </div>
-              <div class="form-group col-sm-6">
-                <label for="input-priority">Client Priority</label>
-                <input type="number" class="form-control" id="input-priority" min="1" data-bind="value: priority">
-              </div>
-              <div class="form-group col-sm-6">
-                <label for="input-date">Target Date</label>
-                <input type="date" class="form-control" id="input-date" min="{{ now.strftime('%Y-%m-%d') }}" data-bind="value: target_date">
-              </div>
-              <div class="form-group col-sm-6">
-                <label for="input-product">Product Area</label>
-                <select class="form-control" id="input-product" data-bind="value: product_area">
-                  <option value="policies">Policies</option>
-                  <option value="billing">Billing</option>
-                  <option value="claims">Claims</option>
-                  <option value="reports">Reports</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
+            <div class="panel-footer">
               <button type="submit" class="btn btn-success pull-right" data-bind="click: savePendingFeatureRequest, enable: isValid()">Create feature request</button>
               <div class="clearfix"></div>
             </div>
-          </form>
+          </div>
         </div>
-        <hr class="hide visible-xs">
         <div class="col-xs-12 col-sm-6" id="feature-request-section">
           <h2>Active feature requests</h2>
           <div id="feature-request-list" data-bind="foreach: filteredFeatureRequests">
@@ -101,7 +104,7 @@
               <div class="panel-body">
                 <p class="description" data-bind="text: description"></p>
                 <hr>
-                <dl>
+                <dl class="dl-horizontal">
                   <dt>Product Area</dt>
                   <dd>
                     <span class="product-area" data-bind="text: $root.productAreaName(product_area)"></span>
@@ -121,6 +124,9 @@
                 </dl>
               </div>
             </div>
+          </div>
+          <div class="feature-request-list-empty" data-bind="visible: filteredFeatureRequests().length === 0">
+            <h4>No active feature requests for <strong data-bind="text: $root.activeClientName()"></strong></h4>
           </div>
         </div>
       </div>

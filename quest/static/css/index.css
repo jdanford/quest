@@ -1,3 +1,5 @@
+/* General layout */
+
 html {
     position: relative;
     min-height: 100%;
@@ -28,12 +30,40 @@ body > .container {
     margin: 20px 0;
 }
 
-/*------------------------------*/
+/* App-specific styles */
 
-.row hr {
-    width: 100%;
+.feature-request-list-empty {
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    color: #777;
+    background: #fafafa;
 }
 
 .feature-request .panel-title {
     display: inline-block;
+}
+
+.feature-request .close {
+    margin-top: -2px;
+}
+
+.feature-request .dl-horizontal {
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .feature-request .dl-horizontal dt:not(:first-child) {
+        margin-top: 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    .feature-request .dl-horizontal dt {
+        width: 90px;
+    }
+
+    .feature-request .dl-horizontal dd {
+        margin-left: 110px;
+    }
 }
