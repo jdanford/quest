@@ -9,7 +9,7 @@ blueprint = Blueprint("api", __name__)
 
 @blueprint.route("/features", methods=["GET"])
 def get_features():
-    features = Feature.query.all()
+    features = Feature.query.order_by(Feature.priority).all()
     return jsonify({"features": features})
 
 
@@ -19,6 +19,7 @@ def create_feature():
         abort(400)
 
     feature = Feature.from_json(request.json)
+    Feature.update_priorities(feature.client, feature)
     db.session.add(feature)
     db.session.commit()
 
@@ -32,6 +33,7 @@ def delete_feature(feature_id):
         abort(404)
 
     db.session.delete(feature)
+    Feature.update_priorities(feature.client)
     db.session.commit()
 
-    return "", 200
+    return ""

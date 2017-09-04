@@ -31,6 +31,20 @@ class Feature(db.Model):
     product_area = db.Column(db.Enum(ProductArea))
 
     @classmethod
+    def update_priorities(cls, client, new_feature=None):
+        features = Feature.query.filter_by(client=client).all()
+
+        if new_feature:
+            if Feature.query.filter_by(priority=new_feature.priority).scalar():
+                new_feature.priority -= 0.5
+
+            features.append(new_feature)
+
+        sorted_features = sorted(features, key=lambda feature: feature.priority)
+        for i, feature in enumerate(sorted_features, start=1):
+            feature.priority = i
+
+    @classmethod
     def from_json(cls, data):
         client = Client[data["client"].upper()]
         priority = int(data["priority"])

@@ -1,3 +1,5 @@
+var currentDate = $("#input-date").attr("min");
+
 function ViewModel() {
     var self = this;
 
@@ -15,7 +17,7 @@ function ViewModel() {
         self.description("");
         self.client("A");
         self.priority(1);
-        self.target_date("2017-09-03");
+        self.target_date(currentDate);
         self.product_area("billing");
     };
 
