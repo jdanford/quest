@@ -1,3 +1,4 @@
 var viewModel = new ViewModel();
-viewModel.loadFeatureRequests();
-ko.applyBindings(viewModel);
+viewModel.loadFeatureRequests(function () {
+    ko.applyBindings(viewModel);
+});

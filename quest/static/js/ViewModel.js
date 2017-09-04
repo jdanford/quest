@@ -25,7 +25,7 @@ function ViewModel() {
         self.client("A");
         self.priority(1);
         self.target_date(currentDate);
-        self.product_area("billing");
+        self.product_area("policies");
     };
 
     // keepin' it DRY
@@ -44,7 +44,7 @@ function ViewModel() {
             && productAreaIsValid(self.product_area());
     });
 
-    self.loadFeatureRequests = function () {
+    self.loadFeatureRequests = function (callback) {
         self.loading(true);
         ajax({
             method: "GET",
@@ -52,6 +52,7 @@ function ViewModel() {
         }, function (data) {
             self.loading(false);
             self.featureRequests(data.features);
+            callback && callback();
         });
     };
 
@@ -107,8 +108,8 @@ var PRODUCT_AREA_NAMES = {
 };
 
 var PRODUCT_AREA_CLASSES = {
-    policies: "panel-success",
-    billing: "panel-info",
+    policies: "panel-info",
+    billing: "panel-success",
     claims: "panel-warning",
     // everyone knows reports are the most dangerous
     reports: "panel-danger",
