@@ -25,10 +25,10 @@ class Feature(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
     description = db.Column(db.Text)
-    client = db.Column(db.Enum(Client))
+    client = db.Column(db.Enum(Client, native_enum=False))
     priority = db.Column(db.Integer)
     target_date = db.Column(db.Date)
-    product_area = db.Column(db.Enum(ProductArea))
+    product_area = db.Column(db.Enum(ProductArea, native_enum=False))
 
     @classmethod
     def update_priorities(cls, client, new_feature=None):
