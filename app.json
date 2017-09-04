@@ -4,12 +4,5 @@
   "repository": "https://github.com/jdanford/quest",
   "addons": [
     "heroku-postgresql"
-  ],
-  "environments": {
-    "test": {
-      "scripts": {
-        "test": "python -m pytest"
-      }
-    }
-  }
+  ]
 }

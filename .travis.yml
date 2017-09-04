@@ -1,0 +1,17 @@
+language: python
+python:
+  - '3.5'
+  - '3.6'
+
+install:
+  - pip install pipenv
+  - pipenv install --dev
+
+script:
+  - pipenv run python -m pytest
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: jMjQwpqevPBlw0jDCC1SOHtzu/lhRjPK7TLjVE3KpbVPsul5AyI/ne/ul3elpMGfMMn27mGZeaVLb6Nu5bwuENqcDBzzXQOxjihLW8V2jf5bQqu/MMTzS8HlUj5mqiQqaFjs9xe8ESc+TWvJla70i3qEGp1B6Jqw+7I7RWvrAZTKbI2f5Ndb2/q+SJ3Lov24NcE28MneqeFzWn18BIhm0JGtdgKwUZbTSi5gc6MQHcCC8emB+pTi/s+oBNhBroj54vnjEaEfVxZRJgOm8vCTI0b98/tp6BxzJqBiZ1zYXcCvX5f1SG+SpxDAMnX1ypYi4UvO8Ci8OBq2yBkTb2UJ4JvGtjSceOtG4b5tJ4DTIp3x1urYFG4vydYRqEQx5gOa6s0TgYUg7r2TOT3DCWRw/x6gy7kAWc2NEfVOCZ/fzJudD+bZ21PCnGCO5rXA2bbK4A32LEUPEU3lpJqNZr1ia2taq51O5PF3SEDWUjWA7mOuUVGt0cFpSuZG3wq5zq6lpThDql/XcaI1UxfG6gOUG6n8DAyZLEO+UWX4H4EQZFV05rMwwG9lS7V8I4iR56xycKiAej83u5JA5Mpf6enJaQdJAYrVr2/LTpBV0UBiThzSE3y2WHvynQk0sYdtt1hZ8sQx2GLuEbiZf0VFOXw5eJA/K1O01Myngj/lKNF7F0c=
+  app: quest-jdanford
