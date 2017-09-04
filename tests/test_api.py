@@ -105,4 +105,4 @@ def post(client, url, data):
 
 
 def get_response_json(response):
-    return json.loads(response.get_data())
+    return json.loads(response.get_data().decode("utf8"))
