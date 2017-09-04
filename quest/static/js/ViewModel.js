@@ -1,12 +1,10 @@
-// steal the current date from the template
-var currentDate = $("#input-date").attr("min");
-
 function ViewModel() {
     // mmm love that dynamic binding workaround
     var self = this;
 
     // app data
     self.featureRequests = ko.observableArray();
+    self.activeClient = ko.observable("");
     self.loading = ko.observable(false);
 
     // editor fields
@@ -20,16 +18,23 @@ function ViewModel() {
 
     self.resetFields = function () {
         self.id = undefined;
-        self.title("");
-        self.description("");
-        self.client("A");
-        self.priority(1);
-        self.target_date(currentDate);
-        self.product_area("policies");
+        self.title(FIELD_DEFAULTS.title);
+        self.description(FIELD_DEFAULTS.description);
+        self.priority(FIELD_DEFAULTS.priority);
+        self.target_date(FIELD_DEFAULTS.target_date);
+        self.product_area(FIELD_DEFAULTS.product_area);
+        self.resetClientField();
     };
 
-    // keepin' it DRY
+    self.resetClientField = function (client) {
+        self.client(client || self.activeClient() || FIELD_DEFAULTS.client);
+    };
+
+    // keep it DRY
     self.resetFields();
+
+    // keep the client field synced up with the active client
+    self.activeClient.subscribe(self.resetClientField);
 
     self.isNew = ko.computed(function () {
         return self.id === undefined;
@@ -44,11 +49,22 @@ function ViewModel() {
             && productAreaIsValid(self.product_area());
     });
 
+    self.setActiveClient = function (client) {
+        self.activeClient(client);
+    };
+
+    self.filteredFeatureRequests = ko.computed(function () {
+        var client = self.activeClient();
+        return self.featureRequests().filter(function (featureRequest) {
+            return !client || featureRequest.client === client;
+        });
+    });
+
     self.loadFeatureRequests = function (callback) {
         self.loading(true);
         ajax({
             method: "GET",
-            url: "/api/features",
+            url: API_PREFIX + "/features",
         }, function (data) {
             self.loading(false);
             self.featureRequests(data.features);
@@ -69,7 +85,7 @@ function ViewModel() {
 
         ajax({
             method: "POST",
-            url: "/api/features",
+            url: API_PREFIX + "/features",
             data: data,
         }, function (data) {
             self.resetFields();
@@ -85,7 +101,7 @@ function ViewModel() {
 
         ajax({
             method: "DELETE",
-            url: "/api/features/" + featureRequest.id,
+            url: API_PREFIX + "/features/" + featureRequest.id,
         }, function (data) {
             self.loadFeatureRequests();
         });
@@ -99,6 +115,20 @@ function ViewModel() {
         return PRODUCT_AREA_CLASSES[featureRequest.product_area];
     };
 }
+
+var API_PREFIX = "/api";
+
+// steal the current date from the template
+var currentDate = $("#input-date").attr("min");
+
+var FIELD_DEFAULTS = {
+    title: "",
+    description: "",
+    priority: 1,
+    target_date: currentDate,
+    product_area: "policies",
+    client: "A",
+};
 
 var PRODUCT_AREA_NAMES = {
     policies: "Policies",
