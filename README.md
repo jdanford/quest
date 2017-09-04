@@ -37,4 +37,4 @@ pipenv run flake8 app.py quest
 
 ## Attributions
 
-- Compass icon from [Open Iconic](www.useiconic.com/open)
+- Compass icon from [Open Iconic](https://useiconic.com/open)
